@@ -19,6 +19,7 @@
                 <td>{{person.age}}</td>
                 <td>{{person.occupation}}</td>
                 <td>{{person.annualTax}}</td>
+                <td><button class="btn btn-danger" @click="deletePerson(person.id)">Delete</button></td>
             </tr>
             </tbody>
         </table>
@@ -40,6 +41,12 @@
                     this.peopleData = data;
                 });
             },
+            deletePerson(id){
+                PeopleService.deletePerson(id);
+                const index = this.peopleData.findIndex(person => person.id === id);
+                if (~index)
+                    this.peopleData.splice(index, 1);
+            }
         },
         mounted() {
             this.getPeople();

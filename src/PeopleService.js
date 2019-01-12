@@ -5,4 +5,8 @@ export class PeopleService{
         const getPeopleURL = `${url}/people/`;
         return axios.get(getPeopleURL).then(response => response.data);
     }
+    static deletePerson(id) {
+        const deletePersonURL = `${url}/people/${id}`;
+        axios.delete(deletePersonURL);
+    }
 }
