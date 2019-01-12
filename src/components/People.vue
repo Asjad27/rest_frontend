@@ -9,6 +9,7 @@
                 <th>Age</th>
                 <th>Occupation</th>
                 <th>Annual Tax</th>
+                <td><button class="btn btn-primary" @click="getPeople()">Refresh</button></td>
             </tr>
             </thead>
             <tbody>
