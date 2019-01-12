@@ -20,16 +20,66 @@
                 <td>{{person.age}}</td>
                 <td>{{person.occupation}}</td>
                 <td>{{person.annualTax}}</td>
-                <td><b-button  v-b-modal="'personEditModal'" @click="setPerson(person)">Edit</b-button>
+                <td><b-button v-b-modal="'personEditModal'" @click="setPerson(person)">Edit</b-button>
                     <button class="btn btn-danger" @click="deletePerson(person.id)">Delete</button></td>
             </tr>
             </tbody>
         </table>
+        <div align="center"><b-button class="btn btn-success" v-b-modal="'personNewModal'">Add</b-button></div>
         <b-modal id="personEditModal"
                  lazy:true
                  title="Person Data Edit"
                  @ok="editPerson"
                  ok-title="Save">
+            <div>
+                <b-form>
+                    <b-form-group id="nameInputGroup"
+                                  label="Name:">
+                        <b-form-input id="nameInput"
+                                      type="text"
+                                      v-model="selectedPerson.name"
+                                      required>
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="cityInputGroup"
+                                  label="City:">
+                        <b-form-input id="cityInput"
+                                      type="text"
+                                      v-model="selectedPerson.city"
+                                      required>
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="ageInputGroup"
+                                  label="Age:">
+                        <b-form-input id="ageInput"
+                                      type="number"
+                                      v-model="selectedPerson.age"
+                                      required>
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="occupationInputGroup"
+                                  label="Occupation:">
+                        <b-form-input id="occupationInput"
+                                      type="text"
+                                      v-model="selectedPerson.occupation"
+                                      required>
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="annualTaxInputGroup"
+                                  label="Annual Tax:">
+                        <b-form-input id="annualTaxInput"
+                                      type="number"
+                                      v-model="selectedPerson.annualTax"
+                                      requred>
+                        </b-form-input>
+                    </b-form-group>
+                </b-form>
+            </div>
+        </b-modal>
+        <b-modal id="personNewModal"
+                 title="Create New Person"
+                 @ok="newPerson"
+                 ok-title="Create">
             <div>
                 <b-form>
                     <b-form-group id="nameInputGroup"
@@ -85,7 +135,7 @@
         data() {
             return {
                 peopleData: [],
-                selectedPerson: ''
+                selectedPerson: {}
             };
         },
         methods: {
@@ -96,10 +146,15 @@
             },
             editPerson(){
                 PeopleService.editPerson(this.selectedPerson);
-                this.selectedPerson = '';
+                this.selectedPerson = {};
             },
             setPerson(person){
                 this.selectedPerson = person;
+            },
+            newPerson(){
+                PeopleService.newPerson(this.selectedPerson);
+                this.peopleData.push(this.selectedPerson);
+                this.selectedPerson = {};
             },
             deletePerson(id){
                 PeopleService.deletePerson(id);
